@@ -5,10 +5,12 @@ const Login = () => {
 
   console.log(userSession);
 
+  const randomPosition = Math.floor(Math.random() * 10);
+
   return (
     <div>
       <img
-        src={possibleAvatars[0]}
+        src={possibleAvatars[randomPosition]}
         alt=""
         className="w-24 h-24 rounded-full block"
       />

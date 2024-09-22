@@ -8,26 +8,16 @@ export type UserSession = {
 };
 
 export const possibleAvatars = [
-  "https://i.imgur.com/1.jpg",
-  "https://i.imgur.com/2.jpg",
-  "https://i.imgur.com/3.jpg",
-  "https://i.imgur.com/4.jpg",
-  "https://i.imgur.com/5.jpg",
-  "https://i.imgur.com/6.jpg",
-  "https://i.imgur.com/7.jpg",
-  "https://i.imgur.com/8.jpg",
-  "https://i.imgur.com/9.jpg",
-  "https://i.imgur.com/10.jpg",
-  "https://i.imgur.com/11.jpg",
-  "https://i.imgur.com/12.jpg",
-  "https://i.imgur.com/13.jpg",
-  "https://i.imgur.com/14.jpg",
-  "https://i.imgur.com/15.jpg",
-  "https://i.imgur.com/16.jpg",
-  "https://i.imgur.com/17.jpg",
-  "https://i.imgur.com/18.jpg",
-  "https://i.imgur.com/19.jpg",
-  "https://i.imgur.com/20.jpg",
+  "https://cdn-icons-png.flaticon.com/512/147/147144.png",
+  "https://cdn-icons-png.freepik.com/512/147/147133.png",
+  "https://cdn-icons-png.flaticon.com/512/6858/6858504.png",
+  "https://cdn-icons-png.flaticon.com/512/147/147142.png",
+  "https://cdn-icons-png.flaticon.com/512/8090/8090406.png",
+  "https://cdn-icons-png.flaticon.com/512/3781/3781973.png",
+  "https://cdn-icons-png.flaticon.com/512/4975/4975733.png",
+  "https://cdn-icons-png.flaticon.com/512/190/190670.png",
+  "https://cdn-icons-png.flaticon.com/512/147/147137.png",
+  "https://cdn-icons-png.flaticon.com/512/147/147135.png",
 ];
 
 interface ChatContext {
