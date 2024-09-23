@@ -5,15 +5,20 @@ import "./index.css";
 import App from "./App";
 import { ChatContextProvider } from "./hooks/useChatContext";
 import { NextUIProvider } from "@nextui-org/system";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <NextUIProvider>
-        <ChatContextProvider>
-          <App />
-        </ChatContextProvider>
-      </NextUIProvider>
+      <QueryClientProvider client={queryClient}>
+        <NextUIProvider>
+          <ChatContextProvider>
+            <App />
+          </ChatContextProvider>
+        </NextUIProvider>
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
