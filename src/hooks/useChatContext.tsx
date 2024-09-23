@@ -1,4 +1,11 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 
 export type UserSession = {
   userName: string;
@@ -34,6 +41,9 @@ export const chatContext = createContext<ChatContext>({
 interface ChatContextProps extends PropsWithChildren {}
 
 export function ChatContextProvider({ children }: ChatContextProps) {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   const storagedUserSession = localStorage.getItem(
     "userSession"
   ) as UserSession | null;
@@ -41,6 +51,14 @@ export function ChatContextProvider({ children }: ChatContextProps) {
   const [userSession, setUserSession] = useState<UserSession | null>(
     storagedUserSession ?? null
   );
+
+  useEffect(() => {
+    if (!userSession && pathname === "/chat") navigate("/");
+  }, [userSession, pathname]);
+
+  useEffect(() => {
+    if (userSession && pathname === "/") navigate("/chat");
+  }, [userSession, pathname]);
 
   return (
     <chatContext.Provider value={{ setUserSession, userSession }}>

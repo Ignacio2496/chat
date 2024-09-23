@@ -5,6 +5,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}", // Ensure you're scanning the correct files
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     screens: {
@@ -38,6 +39,9 @@ export default {
       borderRadius: {
         "4xl": "2rem",
       },
+      fontFamily: {
+        baloo: ["Baloo 2", "sans-serif"],
+      },
     },
   },
   plugins: [
@@ -47,8 +51,9 @@ export default {
       themes: {
         light: {
           colors: {
-            primary: "#1fb6ff",
+            primary: "#2BE990",
             secondary: "#7e5bef",
+            background: "#2c2929",
           },
         },
       },
