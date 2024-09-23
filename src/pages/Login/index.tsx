@@ -6,10 +6,6 @@ import { LoginCard } from "./LoginCard";
 const Login = () => {
   const [continueToJoin, setContinueToJoin] = useState<boolean>(false);
 
-  // const randomPosition = Math.floor(Math.random() * 10);
-
-  // const redirect = useNavigate();
-
   return (
     <div className="w-full min-h-screen h-full flex justify-center items-center flex-col">
       <div className="w-full max-w-128 rounded-xl overflow-hidden">

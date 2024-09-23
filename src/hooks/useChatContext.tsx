@@ -11,7 +11,6 @@ export type UserSession = {
   userName: string;
   avatarUrl: string;
   signedIn: string;
-  isSessionActive: boolean;
 };
 
 export const possibleAvatars = [
@@ -44,20 +43,22 @@ export function ChatContextProvider({ children }: ChatContextProps) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const storagedUserSession = localStorage.getItem(
-    "userSession"
-  ) as UserSession | null;
+  const storagedUserSession = localStorage.getItem("userSession") as
+    | string
+    | null;
 
   const [userSession, setUserSession] = useState<UserSession | null>(
-    storagedUserSession ?? null
+    storagedUserSession ? JSON.parse(storagedUserSession) : null
   );
 
   useEffect(() => {
     if (!userSession && pathname === "/chat") navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSession, pathname]);
 
   useEffect(() => {
     if (userSession && pathname === "/") navigate("/chat");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSession, pathname]);
 
   return (
@@ -67,6 +68,7 @@ export function ChatContextProvider({ children }: ChatContextProps) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useChatContext() {
   return useContext(chatContext);
 }
