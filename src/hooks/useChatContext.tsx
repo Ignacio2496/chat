@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export type UserSession = {
   userName: string;
