@@ -15,14 +15,20 @@ export function MessageCard({
         isOwnerSessionMessage ? "items-start" : "items-end"
       }`}
     >
-      <p className="mb-2">{username}</p>
       <div
         className={`${
           isOwnerSessionMessage ? "bg-primary" : "bg-white"
         } rounded-lg w-fit max-w-[74%] shadow-background shadow-md`}
       >
         <p
-          className={`py-2 px-3 text-black ${
+          className={`px-3 pt-1 text-small capitalize ${
+            isOwnerSessionMessage ? "text-left pr-7" : "text-right pl-7"
+          }`}
+        >
+          {username}
+        </p>
+        <p
+          className={`pb-2 px-3 text-black ${
             isOwnerSessionMessage ? "text-left" : "text-right"
           }`}
         >
