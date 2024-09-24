@@ -1,6 +1,6 @@
 type MessageCardProps = {
   message: string;
-  username: string;
+  username?: string;
   isOwnerSessionMessage?: boolean;
 };
 
