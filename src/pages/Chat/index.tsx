@@ -67,18 +67,19 @@ const Chat = () => {
               </div>
             )}
             {!isLoading &&
-              messages &&
-              messages.data.messages.map((message) => (
+              messages?.data?.messages?.map((x) => (
                 <MessageCard
-                  message={message.message}
+                  username={x.username}
+                  key={x.message}
+                  message={x.message}
                   isOwnerSessionMessage={Boolean(
-                    message.username.toLowerCase() ===
+                    x.username.toLowerCase() ===
                       userSession?.userName.toLowerCase()
                   )}
                 />
               ))}
           </div>
-          <div className="w-full flex items-center justify-center gap-3 px-3 py-5  bottom-0">
+          <form className="w-full flex items-center justify-center gap-3 px-3 py-5  bottom-0">
             <Input
               type="text"
               variant="bordered"
@@ -93,6 +94,7 @@ const Chat = () => {
             />
             <Button
               isIconOnly
+              type="submit"
               color="primary"
               className="rounded-md shadow-md"
               onClick={() => sendMessage()}
@@ -101,7 +103,7 @@ const Chat = () => {
             >
               <SendHorizonal className="stroke-black" strokeWidth={1.4} />
             </Button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

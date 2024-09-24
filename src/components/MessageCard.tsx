@@ -1,10 +1,12 @@
 type MessageCardProps = {
   message: string;
+  username: string;
   isOwnerSessionMessage?: boolean;
 };
 
 export function MessageCard({
   message,
+  username,
   isOwnerSessionMessage,
 }: MessageCardProps) {
   return (
@@ -13,6 +15,7 @@ export function MessageCard({
         isOwnerSessionMessage ? "items-start" : "items-end"
       }`}
     >
+      <p className="mb-2">{username}</p>
       <div
         className={`${
           isOwnerSessionMessage ? "bg-primary" : "bg-white"
