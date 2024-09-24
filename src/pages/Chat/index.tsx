@@ -1,21 +1,48 @@
-// import axios from "axios";
+import axios from "axios";
 import { useChatContext } from "../../hooks/useChatContext";
-// import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { MessageCard } from "../../components/MessageCard";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { SendHorizonal } from "lucide-react";
+import { useState } from "react";
+
+type Message = {
+  message: string;
+  username: string;
+  timestamp: Date;
+};
 
 const Chat = () => {
   const { userSession } = useChatContext();
+  const [userMessage, setUserMessage] = useState<string>("");
 
-  // const { data: messages, isLoading } = useQuery({
-  //   queryKey: ["messages"],
-  //   queryFn: () =>
-  //     axios.get("https://chat-api-production-6dff.up.railway.app/api/messages"),
-  // });
+  const {
+    data: messages,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["messages"],
+    queryFn: () =>
+      axios.get<{ messages: Message[]; count: number }>(
+        "https://chat-api-production-6dff.up.railway.app/api/messages"
+      ),
+    refetchInterval: 1000,
+  });
 
-  // console.log(messages?.data);
-  // console.log(isLoading);
+  const { mutate: sendMessage, isLoading: isSendingMessage } = useMutation({
+    mutationFn: () =>
+      axios.post(
+        "https://chat-api-production-6dff.up.railway.app/api/messages",
+        {
+          message: userMessage,
+          username: userSession?.userName.toLowerCase(),
+        }
+      ),
+    onSuccess: () => {
+      setUserMessage("");
+      refetch();
+    },
+  });
 
   return (
     <div className="w-full min-h-screen h-full flex justify-center items-center flex-col px-4">
@@ -34,45 +61,22 @@ const Chat = () => {
         </div>
         <div className="relative bg-gray-light w-full flex justify-start shadow-md flex-col items-end rounded-b-xl min-h-[80vh] h-[80vh]">
           <div className="w-full overflow-y-auto flex flex-col gap-5 px-5 py-6 h-full scrollbar-hide">
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
-            <MessageCard
-              message="Welcome to our model chat project."
-              isOwnerSessionMessage
-            />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-              isOwnerSessionMessage
-            />
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
-            <MessageCard message="Welcome to our model chat project." />
-            <MessageCard
-              message="Join us in a public chat to interact and discuss about different
-        topics."
-            />
+            {isLoading && (
+              <div className="w-full h-full flex justify-center items-center">
+                <Spinner color="default" size="lg" />
+              </div>
+            )}
+            {!isLoading &&
+              messages &&
+              messages.data.messages.map((message) => (
+                <MessageCard
+                  message={message.message}
+                  isOwnerSessionMessage={Boolean(
+                    message.username.toLowerCase() ===
+                      userSession?.userName.toLowerCase()
+                  )}
+                />
+              ))}
           </div>
           <div className="w-full flex items-center justify-center gap-3 px-3 py-5  bottom-0">
             <Input
@@ -84,8 +88,17 @@ const Chat = () => {
                 inputWrapper: "w-full bg-white rounded-md border-none",
               }}
               className="shadow-md rounded-md md:max-w-[70%] text-black"
+              value={userMessage}
+              onChange={(message) => setUserMessage(message.target.value)}
             />
-            <Button isIconOnly color="primary" className="rounded-md shadow-md">
+            <Button
+              isIconOnly
+              color="primary"
+              className="rounded-md shadow-md"
+              onClick={() => sendMessage()}
+              isDisabled={isSendingMessage}
+              isLoading={isSendingMessage}
+            >
               <SendHorizonal className="stroke-black" strokeWidth={1.4} />
             </Button>
           </div>
